@@ -1,11 +1,13 @@
 package com.example.onlineeduplatformcommunity.domain;
 
 public class Article {
+
     private final int articleId;
     private final int userId;
     private final String title;
     private final String content;
     private boolean blockYn;
+    private String blockComment;
 
     public Article(int articleId, int userId, String title, String content) {
         this.articleId = articleId;
@@ -39,4 +41,11 @@ public class Article {
         this.blockYn = blockYn;
     }
 
+    public String getBlockComment() {
+        return blockComment;
+    }
+
+    public void setBlockComment(String blockComment) {
+        this.blockComment = blockComment;
+    }
 }

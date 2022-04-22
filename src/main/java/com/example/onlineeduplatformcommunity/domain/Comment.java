@@ -1,8 +1,7 @@
 package com.example.onlineeduplatformcommunity.domain;
 
-import java.time.LocalDateTime;
-
 public class Comment {
+
     private final int commentId;
     private final int articleId;
     private final int userId;
