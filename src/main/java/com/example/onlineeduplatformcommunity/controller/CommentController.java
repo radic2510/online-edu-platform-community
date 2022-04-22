@@ -15,8 +15,9 @@ public class CommentController {
     @Bean
     public RouterFunction<ServerResponse> articleRouter(CommentHandler commentHandler) {
         return RouterFunctions.route()
-                .GET("/comment/{articleId}", commentHandler::getComments)
-                .POST("/comment/{articleId}", commentHandler::createComment)
+                .POST("/article/{articleId}", commentHandler::createComment)
+                .GET("/article/{articleId}/comment", commentHandler::getCommentList)
+                .GET("/article/{articleId}/comment/{commentId}", commentHandler::getComment)
                 .PATCH("/comment/{articleId}/{commentId}", commentHandler::blockComment)
                 .build();
     }
