@@ -15,10 +15,10 @@ public class ArticleController {
     @Bean
     public RouterFunction<ServerResponse> articleRouter(ArticleHandler articleHandler) {
         return RouterFunctions.route()
-                .GET("/article", articleHandler::getArticleList)
-                .POST("/article", articleHandler::createArticle)
-                .GET("/article/{articleId}", articleHandler::getArticle)
-                .PATCH("/article/{articleId}", articleHandler::blockArticle)
+                .GET("/articles", articleHandler::getArticleList)
+                .POST("/articles", articleHandler::createArticle)
+                .GET("/articles/{articleId}", articleHandler::getArticle)
+                .PATCH("/articles/{articleId}", articleHandler::blockArticle)
                 .build();
     }
 }

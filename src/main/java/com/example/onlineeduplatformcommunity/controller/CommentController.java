@@ -15,10 +15,10 @@ public class CommentController {
     @Bean
     public RouterFunction<ServerResponse> articleRouter(CommentHandler commentHandler) {
         return RouterFunctions.route()
-                .POST("/article/{articleId}", commentHandler::createComment)
-                .GET("/article/{articleId}/comment", commentHandler::getCommentList)
-                .GET("/article/{articleId}/comment/{commentId}", commentHandler::getComment)
-                .PATCH("/comment/{articleId}/{commentId}", commentHandler::blockComment)
+                .POST("/articles/{articleId}", commentHandler::createComment)
+                .GET("/articles/{articleId}/comments", commentHandler::getCommentList)
+                .GET("/articles/{articleId}/comments/{commentId}", commentHandler::getComment)
+                .PATCH("/articles/{articleId}/comments/{commentId}", commentHandler::blockComment)
                 .build();
     }
 }
