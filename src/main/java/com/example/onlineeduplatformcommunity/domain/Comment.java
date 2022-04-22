@@ -7,14 +7,15 @@ public class Comment {
     private final int articleId;
     private final int userId;
     private final String comment;
-    private int blockYn;
+    private boolean blockYn;
+    private String blockComment;
 
     public Comment(int commentId, int articleId, int userId, String comment) {
         this.commentId = commentId;
         this.articleId = articleId;
         this.userId = userId;
         this.comment = comment;
-        this.blockYn = 0;
+        this.blockYn = false;
     }
 
     public int getCommentId() {
@@ -33,12 +34,19 @@ public class Comment {
         return comment;
     }
 
-    public int getBlockYn() {
+    public boolean getBlockYn() {
         return blockYn;
     }
 
-    public void setBlockYn(int blockYn) {
+    public void setBlockYn(boolean blockYn) {
         this.blockYn = blockYn;
     }
 
+    public String getBlockComment() {
+        return blockComment;
+    }
+
+    public void setBlockComment(String blockComment) {
+        this.blockComment = blockComment;
+    }
 }
