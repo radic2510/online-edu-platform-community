@@ -3,14 +3,16 @@ package com.example.onlineeduplatformcommunity.domain;
 public class Article {
     private final int articleId;
     private final int userId;
+    private final String title;
     private final String content;
-    private int blockYn;
+    private boolean blockYn;
 
-    public Article(int commentId, int articleId, int userId, String comment) {
+    public Article(int articleId, int userId, String title, String content) {
         this.articleId = articleId;
         this.userId = userId;
-        this.content = comment;
-        this.blockYn = 0;
+        this.title = title;
+        this.content = content;
+        this.blockYn = false;
     }
 
     public int getArticleId() {
@@ -21,15 +23,19 @@ public class Article {
         return userId;
     }
 
+    public String getTitle() {
+        return title;
+    }
+
     public String getContent() {
         return content;
     }
 
-    public int getBlockYn() {
+    public boolean getBlockYn() {
         return blockYn;
     }
 
-    public void setBlockYn(int blockYn) {
+    public void setBlockYn(boolean blockYn) {
         this.blockYn = blockYn;
     }
 
