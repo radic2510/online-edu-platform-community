@@ -1,4 +1,4 @@
-package com.example.onlineeduplatformcommunity.controller;
+package com.example.onlineeduplatformcommunity.router;
 
 import com.example.onlineeduplatformcommunity.handler.ArticleHandler;
 import org.springframework.context.annotation.Bean;
@@ -10,7 +10,7 @@ import org.springframework.web.reactive.function.server.ServerResponse;
 
 @Configuration
 @EnableWebFlux
-public class ArticleController {
+public class ArticleRouter {
 
     @Bean
     public RouterFunction<ServerResponse> articleRouter(ArticleHandler articleHandler) {

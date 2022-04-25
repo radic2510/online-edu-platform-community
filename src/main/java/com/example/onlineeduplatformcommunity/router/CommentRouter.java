@@ -1,4 +1,4 @@
-package com.example.onlineeduplatformcommunity.controller;
+package com.example.onlineeduplatformcommunity.router;
 
 import com.example.onlineeduplatformcommunity.handler.CommentHandler;
 import org.springframework.context.annotation.Bean;
@@ -10,10 +10,10 @@ import org.springframework.web.reactive.function.server.ServerResponse;
 
 @Configuration
 @EnableWebFlux
-public class CommentController {
+public class CommentRouter {
 
     @Bean
-    public RouterFunction<ServerResponse> articleRouter(CommentHandler commentHandler) {
+    public RouterFunction<ServerResponse> commentRouter(CommentHandler commentHandler) {
         return RouterFunctions.route()
                 .POST("/articles/{articleId}", commentHandler::createComment)
                 .GET("/articles/{articleId}/comments", commentHandler::getCommentList)

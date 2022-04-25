@@ -1,20 +1,24 @@
-package com.example.onlineeduplatformcommunity.domain;
+package com.example.onlineeduplatformcommunity.model;
 
-public class Article {
+public class Comment {
 
+    private final int commentId;
     private final int articleId;
     private final int userId;
-    private final String title;
-    private final String content;
+    private final String comment;
     private boolean blockYn;
     private String blockComment;
 
-    public Article(int articleId, int userId, String title, String content) {
+    public Comment(int commentId, int articleId, int userId, String comment) {
+        this.commentId = commentId;
         this.articleId = articleId;
         this.userId = userId;
-        this.title = title;
-        this.content = content;
+        this.comment = comment;
         this.blockYn = false;
+    }
+
+    public int getCommentId() {
+        return commentId;
     }
 
     public int getArticleId() {
@@ -25,12 +29,8 @@ public class Article {
         return userId;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public String getContent() {
-        return content;
+    public String getComment() {
+        return comment;
     }
 
     public boolean getBlockYn() {
