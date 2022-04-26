@@ -13,7 +13,7 @@ import org.springframework.web.reactive.function.server.ServerResponse;
 public class ArticleRouter {
 
     @Bean
-    public RouterFunction<ServerResponse> articleRouter(ArticleHandler articleHandler) {
+    public RouterFunction<ServerResponse> article_router(ArticleHandler articleHandler) {
         return RouterFunctions.route()
                 .GET("/articles", articleHandler::getArticleList)
                 .POST("/articles", articleHandler::createArticle)
