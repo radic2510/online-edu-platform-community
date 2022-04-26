@@ -1,23 +1,39 @@
 package com.example.onlineeduplatformcommunity.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Id;
+
+import java.sql.Timestamp;
+
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
 public class Article {
 
-    private final int articleId;
-    private final int userId;
-    private final String title;
-    private final String content;
+    @Id
+    private Long articleId;
+    private int userId;
+    private String title;
+    private String content;
     private boolean blockYn;
-    private String blockComment;
 
-    public Article(int articleId, int userId, String title, String content) {
-        this.articleId = articleId;
+    private Timestamp createdAt;
+
+    private Timestamp updatedAt;
+
+    public Article(int userId, String title, String content, boolean blockYn) {
         this.userId = userId;
         this.title = title;
         this.content = content;
-        this.blockYn = false;
+        this.blockYn = blockYn;
     }
 
-    public int getArticleId() {
+    public Long getArticleId() {
         return articleId;
     }
 
@@ -41,11 +57,24 @@ public class Article {
         this.blockYn = blockYn;
     }
 
-    public String getBlockComment() {
-        return blockComment;
+    public Timestamp getCreatedAt() {
+        return createdAt;
     }
 
-    public void setBlockComment(String blockComment) {
-        this.blockComment = blockComment;
+    public void setCreatedAt(Timestamp createdAt) {
+        this.createdAt = createdAt;
     }
+
+    public Timestamp getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Timestamp updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    /*    public Timestamp getCreateAt() { return createAt; }
+    public void setCreateAt(Timestamp createAt) { this.createAt = createAt; }
+    public Timestamp getUpdateAt() { return updateAt; }
+    public void setUpdateAt(Timestamp updateAt) { this.updateAt = updateAt; }*/
 }

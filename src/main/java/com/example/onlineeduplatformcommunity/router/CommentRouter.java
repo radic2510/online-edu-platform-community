@@ -13,12 +13,11 @@ import org.springframework.web.reactive.function.server.ServerResponse;
 public class CommentRouter {
 
     @Bean
-    public RouterFunction<ServerResponse> commentRouter(CommentHandler commentHandler) {
+    public RouterFunction<ServerResponse> commentsRouter(CommentHandler commentHandler) {
         return RouterFunctions.route()
                 .POST("/articles/{articleId}", commentHandler::createComment)
                 .GET("/articles/{articleId}/comments", commentHandler::getCommentList)
-                .GET("/articles/{articleId}/comments/{commentId}", commentHandler::getComment)
-                .PATCH("/articles/{articleId}/comments/{commentId}", commentHandler::blockComment)
+                .PATCH("/articles/comments/{commentId}", commentHandler::blockComment)
                 .build();
     }
 }

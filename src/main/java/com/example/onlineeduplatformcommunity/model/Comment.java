@@ -1,51 +1,34 @@
 package com.example.onlineeduplatformcommunity.model;
 
+import lombok.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Table;
+
+@Table(value = "comment")
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+@ToString
 public class Comment {
 
-    private final int commentId;
-    private final int articleId;
-    private final int userId;
-    private final String comment;
+    @Id
+    private Long commentId;
+    private Long articleId;
+    private Long userId;
+    private String content;
     private boolean blockYn;
-    private String blockComment;
 
-    public Comment(int commentId, int articleId, int userId, String comment) {
-        this.commentId = commentId;
+    public Comment(Long userId, String content)
+    {
+        this.userId = userId;
+        this.content = content;
+    }
+
+    public Comment(Long articleId, Long userId, String content)
+    {
         this.articleId = articleId;
         this.userId = userId;
-        this.comment = comment;
-        this.blockYn = false;
-    }
-
-    public int getCommentId() {
-        return commentId;
-    }
-
-    public int getArticleId() {
-        return articleId;
-    }
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public String getComment() {
-        return comment;
-    }
-
-    public boolean getBlockYn() {
-        return blockYn;
-    }
-
-    public void setBlockYn(boolean blockYn) {
-        this.blockYn = blockYn;
-    }
-
-    public String getBlockComment() {
-        return blockComment;
-    }
-
-    public void setBlockComment(String blockComment) {
-        this.blockComment = blockComment;
+        this.content = content;
     }
 }
