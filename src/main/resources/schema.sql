@@ -10,4 +10,15 @@ CREATE TABLE Article(
 
 );
 
-insert into Article (article_id, user_id, title, content, block_yn,created_at,updated_at) values (1, 1, 'TESTTITLE', 'Content1',false, now(), now());
+DROP TABLE IF EXISTS COMMENT;
+CREATE TABLE COMMENT
+(
+    comment_Id        INT PRIMARY KEY AUTO_INCREMENT,
+    article_Id        INT,
+    user_Id       INT,
+    content VARCHAR(50),
+    block_yn  BOOLEAN
+);
+
+INSERT INTO COMMENT (comment_Id,article_Id,user_Id,content,block_yn)
+VALUES (1,1,1,'test',false);

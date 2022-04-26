@@ -1,6 +1,9 @@
 package com.example.onlineeduplatformcommunity.handler;
 
+import com.example.onlineeduplatformcommunity.model.Article;
 import com.example.onlineeduplatformcommunity.model.Comment;
+import com.example.onlineeduplatformcommunity.repository.ArticleRepository;
+import com.example.onlineeduplatformcommunity.repository.CommentRepository;
 import com.example.onlineeduplatformcommunity.service.CommentService;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
@@ -9,49 +12,51 @@ import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.sql.Timestamp;
+
 @Component
 public class CommentHandler {
-    private CommentService commentService;
 
-    public CommentHandler(CommentService commentService) {
-        this.commentService = commentService;
+    private CommentRepository commentRepository;
+    public CommentHandler(CommentRepository commentRepository) {
+        this.commentRepository = commentRepository;
     }
 
     public Mono<ServerResponse> createComment(ServerRequest serverRequest) {
-        int articleId = Integer.parseInt(serverRequest.pathVariable("articleId"));
-        Mono<Comment> commentMono = serverRequest.bodyToMono(Comment.class);
+        Long articleId = Long.parseLong(serverRequest.pathVariable("articleId"));
+        Mono<Comment> commentMono = serverRequest.bodyToMono(Comment.class)
+                .onErrorResume(throwable -> {
+                    System.out.println(throwable.getMessage());
+                    return Mono.error(new RuntimeException(throwable));
+                })
+                .flatMap(x-> Mono.just(new Comment(articleId,x.getUserId(), x.getContent())));
 
-//         Mono<Comment> responseCommentMono = commentMono.flatMap(comment -> {
-//            return commentService.createComment(comment);
-//        });
 
-//        return ServerResponse.ok()
-//                            .contentType(MediaType.APPLICATION_JSON)
-//                            .body(responseCommentMono, Comment.class);
-        return null;
+        return ServerResponse.ok().contentType(MediaType.APPLICATION_JSON).body(
+                commentMono.flatMap(this.commentRepository::save),Comment.class);
     }
 
-    public Mono<ServerResponse> getComment(ServerRequest serverRequest) {
-        int articleId = Integer.parseInt(serverRequest.pathVariable("articleId"));
-        int commentId = Integer.parseInt(serverRequest.pathVariable("commentId"));
-
-        Mono<Comment> responseComment = commentService.getComment(articleId, commentId);
-
-        return ServerResponse.ok()
-                .contentType(MediaType.APPLICATION_JSON)
-                .body(responseComment, Comment.class);
-    }
-
-    //    Mono<ServerResponse> blockComment(ServerRequest serverRequest);
-//
     public Mono<ServerResponse> getCommentList(ServerRequest serverRequest) {
-        int articleId = Integer.parseInt(serverRequest.pathVariable("articleId"));
 
-        Flux<Comment> articleFlux = commentService.getCommentList(articleId);
+        Long articleId = Long.parseLong(serverRequest.pathVariable("articleId"));
+        Mono<ServerResponse> notFound = ServerResponse.notFound().build();
+        Flux<Comment> commentMono = this.commentRepository.findByArticleId(articleId)
+                .filter(comment -> comment.isBlockYn() == false);
 
-        return ServerResponse.ok()
-                .contentType(MediaType.APPLICATION_JSON)
-                .body(articleFlux, Comment.class);
+        return ServerResponse.ok().contentType(MediaType.APPLICATION_JSON)
+                .body(commentMono, Comment.class);
+
+    }
+    public Mono<ServerResponse> blockComment(ServerRequest serverRequest)
+    {
+        Long commentId = Long.parseLong(serverRequest.pathVariable("commentId"));
+        Mono<Comment> commentMono = this.commentRepository.findById(commentId)
+                .flatMap(x -> {
+                    return Mono.just(new Comment(x.getCommentId(),x.getArticleId(),x.getUserId(), x.getContent(), true));
+                });
+
+        return ServerResponse.ok().contentType(MediaType.APPLICATION_JSON).body(
+                commentMono.flatMap(this.commentRepository::save),Comment.class);
     }
 }
 

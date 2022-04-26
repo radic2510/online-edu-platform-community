@@ -16,9 +16,8 @@ public class CommentRouter {
     public RouterFunction<ServerResponse> commentsRouter(CommentHandler commentHandler) {
         return RouterFunctions.route()
                 .POST("/articles/{articleId}", commentHandler::createComment)
-                .GET("/articles/{articleId}/comments/{commentId}", commentHandler::getComment)
                 .GET("/articles/{articleId}/comments", commentHandler::getCommentList)
-//                .PATCH("/articles/{articleId}/comments/{commentId}", commentHandler::blockComment)
+                .PATCH("/articles/comments/{commentId}", commentHandler::blockComment)
                 .build();
     }
 }

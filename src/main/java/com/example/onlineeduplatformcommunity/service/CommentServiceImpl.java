@@ -30,11 +30,13 @@ public class CommentServiceImpl implements CommentService {
 //
     @Override
     public Mono<Comment> getComment(int articleId, int commentId) {
-        return this.commentRepository.findByArticleIdAndCommentId(articleId, commentId);
+        return null;
+        //return this.commentRepository.findByArticleIdAndCommentId(articleId, commentId);
     }
 
     @Override
     public Flux<Comment> getCommentList(int articleId) {
-        return this.commentRepository.findByArticleId(articleId);
+        return null;
+        //return this.commentRepository.findByArticleId(articleId);
     }
 }
