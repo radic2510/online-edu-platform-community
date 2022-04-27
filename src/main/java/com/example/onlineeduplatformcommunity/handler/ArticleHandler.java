@@ -1,18 +1,14 @@
 package com.example.onlineeduplatformcommunity.handler;
 
-import com.example.onlineeduplatformcommunity.dto.ArticleCreateRequest;
 import com.example.onlineeduplatformcommunity.model.Article;
 import com.example.onlineeduplatformcommunity.repository.ArticleRepository;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
-import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.sql.Timestamp;
-import java.util.Objects;
 
 @Component
 public class ArticleHandler {
@@ -57,7 +53,7 @@ public class ArticleHandler {
         Long articleId = Long.parseLong(serverRequest.pathVariable("articleId"));
         Mono<Article> articleMono = this.articleRepository.findById(articleId)
                 .flatMap(x -> {
-                    return Mono.just(new Article(articleId, x.getUserId(), x.getTitle(),x.getContent(), true, x.getCreatedAt(), new Timestamp(System.currentTimeMillis())));
+                    return Mono.just(new Article(articleId, x.getUserId(), x.getTitle(), x.getContent(), true, x.getCreatedAt(), x.getUpdatedAt()));
                 });
 
         return ServerResponse.ok().contentType(MediaType.APPLICATION_JSON).body(

@@ -1,7 +1,7 @@
 
 spring:
-
-webclient.h2-console-port: 8081
+  application:
+    name: community-service
 
 server:
   port: 0
@@ -13,4 +13,11 @@ eureka:
     fetch-registry: true
     service-url:
       defaultZone: http://127.0.0.1:8761/eureka
+
+logging:
+  level:
+    root: INFO
+    org.springframework.r2dbc: DEBUG
+
+webclient.h2-console-port: 8081
 
